@@ -1,0 +1,21 @@
+# Secretos
+.env
+*.env
+!.env.example
+*token*
+*.pem
+*.key
+
+# Estado y datos locales de Terraform
+*.tfstate
+*.tfstate.*
+.terraform/
+crash.log
+tfplan
+*.tfvars
+
+# Datos locales de LocalStack
+volume/
+
+# Descarga de prueba generada por verificar.ps1
+descarga_anonima.txt

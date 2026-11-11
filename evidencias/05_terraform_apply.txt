@@ -1,0 +1,19 @@
+﻿> terraform apply tfplan
+aws_s3_bucket.seguro: Creating...
+aws_s3_bucket.seguro: Creation complete after 2s [id=actividad3-seguro-local]
+aws_s3_bucket_public_access_block.seguro: Creating...
+aws_s3_bucket_server_side_encryption_configuration.seguro: Creating...
+aws_s3_bucket_public_access_block.seguro: Creation complete after 0s [id=actividad3-seguro-local]
+aws_s3_bucket_server_side_encryption_configuration.seguro: Creation complete after 0s [id=actividad3-seguro-local]
+
+Apply complete! Resources: 3 added, 0 changed, 0 destroyed.
+
+Outputs:
+
+bucket = "actividad3-seguro-local"
+> terraform state list
+aws_s3_bucket.seguro
+aws_s3_bucket_public_access_block.seguro
+aws_s3_bucket_server_side_encryption_configuration.seguro
+> terraform output
+bucket = "actividad3-seguro-local"

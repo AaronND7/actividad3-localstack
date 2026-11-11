@@ -1,0 +1,17 @@
+﻿> docker --version
+Docker version 29.2.1, build a5c7197
+> docker compose version
+Docker Compose version v5.0.2
+> terraform version
+Terraform v1.17.1
+on windows_amd64
+
+> aws --version
+aws-cli/2.34.13 Python/3.14.3 Windows/11 exe/AMD64
+> docker info (servidor)
+Servidor 29.2.1 | Docker Desktop (containerized) | contenedores corriendo: 1
+> puerto 4566 en uso
+conexiones: 0
+> docker ps
+NAMES        STATUS
+open-webui   Up 25 seconds (health: starting)

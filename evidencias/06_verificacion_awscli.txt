@@ -1,0 +1,109 @@
+﻿
+> aws --endpoint-url http://localhost:4566 s3api list-buckets --query 'Buckets[].Name'
+[
+    "actividad3-seguro-local"
+]
+[codigo de salida: 0]
+
+> aws --endpoint-url http://localhost:4566 s3api get-bucket-encryption --bucket actividad3-seguro-local
+{
+    "ServerSideEncryptionConfiguration": {
+        "Rules": [
+            {
+                "ApplyServerSideEncryptionByDefault": {
+                    "SSEAlgorithm": "AES256"
+                },
+                "BucketKeyEnabled": false,
+                "BlockedEncryptionTypes": {
+                    "EncryptionType": [
+                        "SSE-C"
+                    ]
+                }
+            }
+        ]
+    }
+}
+[codigo de salida: 0]
+
+> aws --endpoint-url http://localhost:4566 s3api get-public-access-block --bucket actividad3-seguro-local
+{
+    "PublicAccessBlockConfiguration": {
+        "BlockPublicAcls": true,
+        "IgnorePublicAcls": true,
+        "BlockPublicPolicy": true,
+        "RestrictPublicBuckets": true
+    }
+}
+[codigo de salida: 0]
+
+> aws --endpoint-url http://localhost:4566 s3 cp prueba.txt s3://actividad3-seguro-local/prueba.txt
+Completed 61 Bytes/61 Bytes (25 Bytes/s) with 1 file(s) remaining
+upload: .\prueba.txt to s3://actividad3-seguro-local/prueba.txt  
+[codigo de salida: 0]
+
+> aws --endpoint-url http://localhost:4566 s3 ls s3://actividad3-seguro-local/
+2026-11-10 23:09:07         61 prueba.txt
+[codigo de salida: 0]
+
+> aws --endpoint-url http://localhost:4566 s3api head-object --bucket actividad3-seguro-local --key prueba.txt --query ServerSideEncryption
+"AES256"
+[codigo de salida: 0]
+
+> aws --endpoint-url http://localhost:4566 --no-sign-request s3 cp s3://actividad3-seguro-local/prueba.txt descarga_anonima.txt
+Completed 61 Bytes/61 Bytes (29 Bytes/s) with 1 file(s) remaining
+download: s3://actividad3-seguro-local/prueba.txt to .\descarga_anonima.txt
+[codigo de salida: 0]
+
+> curl.exe -s -o NUL -w 'HTTP %{http_code}' http://localhost:4566/actividad3-seguro-local/prueba.txt
+HTTP 200
+[codigo de salida: 0]
+
+> aws --endpoint-url http://localhost:4566 s3api get-bucket-policy-status --bucket actividad3-seguro-local
+aws : 
+En línea: 1 Carácter: 1
++ aws --endpoint-url http://localhost:4566 s3api get-bucket-policy-stat ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+aws: [ERROR]: An error occurred (NoSuchBucketPolicy) when calling the GetBucketPolicyStatus operation: The bucket 
+policy does not exist
+
+Additional error details:
+BucketName: actividad3-seguro-local
+[codigo de salida: 254]
+
+> aws --endpoint-url http://localhost:4566 s3api get-bucket-policy --bucket actividad3-seguro-local
+aws : 
+En línea: 1 Carácter: 1
++ aws --endpoint-url http://localhost:4566 s3api get-bucket-policy --bu ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+aws: [ERROR]: An error occurred (NoSuchBucketPolicy) when calling the GetBucketPolicy operation: The bucket policy 
+does not exist
+
+Additional error details:
+BucketName: actividad3-seguro-local
+[codigo de salida: 254]
+> comparar archivo original y descarga anonima (SHA-256)
+C790DCB141DFBF96DD07464165A0E7D038DA49BC6F73B5C76F36D0531B523B6A
+C790DCB141DFBF96DD07464165A0E7D038DA49BC6F73B5C76F36D0531B523B6A
+> aws --endpoint-url http://localhost:4566 s3api get-bucket-acl --bucket actividad3-seguro-local
+{
+    "Owner": {
+        "ID": "75aa57f09aa0c8caeab4f8c24e99d10f8e7faeebf76c078efc7c6caea54ba06a"
+    },
+    "Grants": [
+        {
+            "Grantee": {
+                "ID": "75aa57f09aa0c8caeab4f8c24e99d10f8e7faeebf76c078efc7c6caea54ba06a",
+                "Type": "CanonicalUser"
+            },
+            "Permission": "FULL_CONTROL"
+        }
+    ]
+}
+> configuracion de autorizacion de LocalStack (ENFORCE_IAM)
+ENFORCE_IAM=no definido

@@ -1,0 +1,6 @@
+﻿> docker compose ps
+NAME                    IMAGE                          STATUS                    PORTS
+localstack-actividad3   localstack/localstack:latest   Up 21 seconds (healthy)   127.0.0.1:4566->4566/tcp
+> curl http://localhost:4566/_localstack/health (resumen)
+s3: available | edicion: pro | version: 2026.10.6
+servicios no deshabilitados: s3=available

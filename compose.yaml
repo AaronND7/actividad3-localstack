@@ -1,0 +1,19 @@
+# LocalStack para la Actividad 3: emula S3 solo en esta computadora.
+# El token se lee de la variable LOCALSTACK_AUTH_TOKEN (archivo .env, excluido de Git).
+services:
+  localstack:
+    image: localstack/localstack:latest
+    container_name: localstack-actividad3
+    ports:
+      - "127.0.0.1:4566:4566"   # solo localhost, no se expone a la red
+    environment:
+      - LOCALSTACK_AUTH_TOKEN=${LOCALSTACK_AUTH_TOKEN:?Define LOCALSTACK_AUTH_TOKEN en el archivo .env}
+      - SERVICES=s3
+      - AWS_DEFAULT_REGION=us-east-1
+    healthcheck:
+      # La imagen no trae curl; se usa Python para leer el endpoint de salud y exigir S3 disponible
+      test: ["CMD", "python", "-c", "import urllib.request,json,sys; d=json.load(urllib.request.urlopen('http://localhost:4566/_localstack/health')); sys.exit(0 if d['services'].get('s3') in ('available','running') else 1)"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+      start_period: 20s
