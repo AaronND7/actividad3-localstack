@@ -70,6 +70,7 @@ Versiones usadas: Docker 29.2.1, Docker Compose v5.0.2, Terraform 1.17.1, AWS CL
 - `get-public-access-block`: los cuatro controles en `true`.
 - **Acceso anónimo** (`--no-sign-request` y `curl` sin firma): **permitido**, con HTTP 200 y el mismo contenido (hash SHA-256 idéntico). En AWS real, con el bloqueo de acceso público activo, la ACL privada y sin política de bucket, se esperaría una negación (`403 AccessDenied`).
 - `get-bucket-policy-status`: `NoSuchBucketPolicy`, es decir, el bucket no tiene política. Eso **no** prueba que el bucket sea público; solo indica que no hay una política que lo otorgue.
+- **Dashboard de LocalStack:** el explorador de S3 muestra el bucket `actividad3-seguro-local` en la instancia local (`evidencias/07_dashboard_bucket.png`).
 
 ### Por qué LocalStack permitió el acceso anónimo
 
